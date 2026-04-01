@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  users     User[]
+  invoices  Invoice[]
+  budgets   Budget[]
+}
+
+model User {
+  id        Int          @id @default(autoincrement())
+  name      String
+  email     String       @unique
+  password  String
+  orgId     Int
+  org       Organization @relation(fields: [orgId], references: [id])
+  createdAt DateTime     @default(now())
+}
+
+model Invoice {
+  id          Int        @id @default(autoincrement())
+  orgId       Int
+  org         Organization @relation(fields: [orgId], references: [id])
+  vendorName  String
+  invoiceDate DateTime
+  dueDate     DateTime?
+  totalAmount Float
+  currency    String     @default("INR")
+  category    String
+  status      String     @default("unpaid")
+  rawText     String?    @db.Text
+  confidence  Float?
+  lineItems   LineItem[]
+  createdAt   DateTime   @default(now())
+}
+
+model LineItem {
+  id          Int     @id @default(autoincrement())
+  invoiceId   Int
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Float
+  unitPrice   Float
+  totalPrice  Float
+}
+
+model Budget {
+  id           Int          @id @default(autoincrement())
+  orgId        Int
+  org          Organization @relation(fields: [orgId], references: [id])
+  category     String
+  monthlyLimit Float
+  month        Int
+  year         Int
+  createdAt    DateTime     @default(now())
+
+  @@unique([orgId, category, month, year])
+}
