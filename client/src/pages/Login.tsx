@@ -44,7 +44,7 @@ export default function Login() {
               <label style={{ fontSize: 12.5, fontWeight: 500, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Email address</label>
               <div style={{ position: 'relative' }}>
                 <Mail size={14} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-                <input type="email" required value={form.email} placeholder="sneha@demo.com"
+                <input type="email" required value={form.email} placeholder="your-email@domain.com"
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   className="input" style={{ paddingLeft: 36 }} />
               </div>
@@ -70,12 +70,6 @@ export default function Login() {
             <Link to="/register" style={{ color: 'var(--green)', fontWeight: 500, textDecoration: 'none' }}>Create one</Link>
           </p>
 
-          <div style={{ marginTop: 28, padding: '12px 14px', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 8 }}>
-            <div style={{ fontSize: 11, color: 'var(--text-3)', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Demo credentials</div>
-            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--text-2)', lineHeight: 1.8 }}>
-              sneha@demo.com<br />password123
-            </div>
-          </div>
         </div>
       </div>
 
